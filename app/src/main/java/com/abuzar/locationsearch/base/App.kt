@@ -1,4 +1,4 @@
-package com.abuzar.locationsearch.app
+package com.abuzar.locationsearch.base
 
 import android.app.Application
 import org.koin.android.ext.android.startKoin
