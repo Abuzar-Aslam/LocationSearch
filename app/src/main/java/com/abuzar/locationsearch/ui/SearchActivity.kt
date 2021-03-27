@@ -2,8 +2,9 @@ package com.abuzar.locationsearch.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
+import androidx.databinding.DataBindingUtil
 import com.abuzar.locationsearch.R
+import com.abuzar.locationsearch.databinding.ActivitySearchBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity() {
@@ -13,6 +14,7 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding: ActivitySearchBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_search)
     }
 }
