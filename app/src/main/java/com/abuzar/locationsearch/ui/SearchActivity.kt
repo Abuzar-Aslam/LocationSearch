@@ -35,12 +35,12 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         binding.list.addItemDecoration(itemDecoration)
         binding.list.layoutManager = LinearLayoutManager(applicationContext)
         binding.list.adapter = adapter
-        getAllEmployee()
+        //getAllCities()
 
     }
 
 
-    private fun getAllEmployee() {
+    private fun getAllCities() {
         searchViewModel.getAllCities()
             .observe(this,
                 Observer<List<CityModel>> { cities -> adapter.setCitiesList(cities as ArrayList<CityModel>) })
@@ -71,6 +71,8 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         } else {
             queryString = newText
             searchViewModel.searchCities(newText)
+                .observe(this,
+                    Observer<List<CityModel>> { cities -> adapter.setCitiesList(cities as ArrayList<CityModel>) })
             return true
         }
     }
