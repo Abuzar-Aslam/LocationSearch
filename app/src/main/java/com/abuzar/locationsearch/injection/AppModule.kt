@@ -1,10 +1,9 @@
 package com.abuzar.locationsearch.injection
 
 import android.content.res.AssetManager
-import android.util.Log
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.data.Coordinates
-import com.abuzar.locationsearch.ui.SearchViewModel
+import com.abuzar.locationsearch.ui.search.SearchCityViewModel
 import com.abuzar.locationsearch.utils.CITIES_ASSETS
 import com.abuzar.locationsearch.utils.CITIES_ASSETS_JSON
 import com.google.gson.Gson
@@ -18,8 +17,7 @@ import java.io.Reader
 
 val viewModelModule = module {
 
-
-    single { SearchViewModel(androidApplication(),get()) }
+    single { SearchCityViewModel(get()) }
 
 }
 
