@@ -18,6 +18,8 @@ import com.abuzar.locationsearch.databinding.SearchCityFragmentBinding
 import kotlinx.android.synthetic.main.search_city_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
+import com.abuzar.locationsearch.utils.PROPERTY_CITY_MODEL
+import org.koin.android.ext.android.setProperty
 
 
 class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
@@ -94,8 +96,8 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         }
     }
 
-    override fun launchMapFragment() {
-
+    override fun launchMapFragment(cityModel: CityModel) {
+        setProperty(PROPERTY_CITY_MODEL,cityModel)
         findNavController().navigate(R.id.action_cityList_to_mapFragment)
     }
 

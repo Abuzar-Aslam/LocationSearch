@@ -1,12 +1,8 @@
 package com.abuzar.locationsearch.ui.search
 
-import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.abuzar.locationsearch.data.CityModel
-import com.abuzar.locationsearch.ui.SearchAdapter
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -14,8 +10,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.collections.ArrayList
-import androidx.navigation.fragment.findNavController
-import com.abuzar.locationsearch.R
 
 class SearchCityViewModel(private val cityList: ArrayList<CityModel>) : ViewModel() {
 

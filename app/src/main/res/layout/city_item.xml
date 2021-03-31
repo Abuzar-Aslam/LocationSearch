@@ -9,7 +9,7 @@
 
         <variable
             name="callBack"
-            type="com.abuzar.locationsearch.ui.SearchAdapter" />
+            type="com.abuzar.locationsearch.ui.search.SearchAdapter" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
