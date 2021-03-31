@@ -34,7 +34,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
             // Add a marker in Sydney and move the camera
             val cityLocation = LatLng(mapViewModel.cityModel.coordinates.latitude,mapViewModel.cityModel.coordinates.longitude)
-            googleMap.addMarker(MarkerOptions().position(cityLocation).title(mapViewModel.cityModel.cityName+" , "+mapViewModel.cityModel.country))
+            googleMap.addMarker(MarkerOptions().position(cityLocation).title(mapViewModel.cityModel.formattedTitle()))
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cityLocation,10f))
 
         }
