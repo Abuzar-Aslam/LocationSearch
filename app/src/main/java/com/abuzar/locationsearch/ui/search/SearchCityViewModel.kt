@@ -1,10 +1,10 @@
 package com.abuzar.locationsearch.ui.search
 
-import android.util.Log
-import androidx.databinding.ObservableArrayList
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.ui.SearchAdapter
 import io.reactivex.Observable
@@ -14,16 +14,23 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.collections.ArrayList
-
+import androidx.navigation.fragment.findNavController
+import com.abuzar.locationsearch.R
 
 class SearchCityViewModel(private val cityList: ArrayList<CityModel>) : ViewModel() {
 
     private val filteredCityList: ArrayList<CityModel> = ArrayList<CityModel>()
     private var cityLiveData: MutableLiveData<ArrayList<CityModel>> = MutableLiveData()
-    private val searchAdapter: SearchAdapter = SearchAdapter()
+    private lateinit var searchAdapter: SearchAdapter
+    private lateinit var searchCityNavigation: SearchCityNavigation
 
     fun getAdapter(): SearchAdapter {
+        searchAdapter= SearchAdapter(searchCityNavigation)
         return searchAdapter
+    }
+
+    fun setNavigator(searchCityNavigation: SearchCityNavigation) {
+        this.searchCityNavigation = searchCityNavigation
     }
 
 
@@ -60,26 +67,19 @@ class SearchCityViewModel(private val cityList: ArrayList<CityModel>) : ViewMode
                     }
             }
             .doOnComplete {
-                //Log.e("Abuzar", "ONCOMPLETE")
-                //sortFilteredList()
-
+                filteredCityList.sortWith(Comparator { s1, s2 ->
+                    s1.cityName.compareTo(
+                        s2.cityName,
+                        ignoreCase = true
+                    )
+                })
                 cityLiveData.postValue(filteredCityList)
             }
             .subscribe { result ->
-              //  Log.e("Abuzar", result.toString())
+                //  Log.e("Abuzar", result.toString())
                 filteredCityList += result
             }
 
-    }
-
-    fun sortFilteredList() {
-        Log.e("Abuzar", "Sorting= ${filteredCityList.size}")
-    }
-
-    fun getAllCities(): LiveData<List<CityModel>> {
-        val mutableLiveData = MutableLiveData<List<CityModel>>()
-        mutableLiveData.value = cityList
-        return mutableLiveData
     }
 
     fun setAdapterData(items: ArrayList<CityModel>) {

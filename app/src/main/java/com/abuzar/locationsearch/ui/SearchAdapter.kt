@@ -1,16 +1,18 @@
 package com.abuzar.locationsearch.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.databinding.CityItemBinding
+import com.abuzar.locationsearch.ui.search.SearchCityNavigation
+import com.abuzar.locationsearch.ui.search.SearchCityViewModel
 
-class SearchAdapter : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(DifferentUtil) {
+class SearchAdapter(val searchCityNavigation: SearchCityNavigation) : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(DifferentUtil) {
 
 
     private var cityModelList = ArrayList<CityModel>()
@@ -19,8 +21,8 @@ class SearchAdapter : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(Diffe
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = CityItemBinding.inflate(layoutInflater)
-
+        val binding = CityItemBinding.inflate(layoutInflater,parent,false)
+        binding.callBack = this
 
        return  CityViewHolder(binding)
     }
@@ -36,6 +38,10 @@ class SearchAdapter : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(Diffe
     fun setCitiesList(cityModelList: ArrayList<CityModel>) {
         this.cityModelList = cityModelList
         notifyDataSetChanged()
+    }
+
+    fun onItemClick(city: CityModel) {
+        searchCityNavigation.launchMapFragment()
     }
 
 

@@ -10,6 +10,17 @@
             android:id="@+id/searchCityFragment"
             android:name="com.abuzar.locationsearch.ui.search.SearchCityFragment"
             tools:layout="@layout/search_city_fragment">
+
+        <action
+            android:id="@+id/action_cityList_to_mapFragment"
+            app:destination="@+id/mapFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.abuzar.locationsearch.ui.map.MapFragment"
+        tools:layout="@layout/search_city_fragment">
     </fragment>
 
 

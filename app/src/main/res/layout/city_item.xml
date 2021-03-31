@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="cityData"
             type="com.abuzar.locationsearch.data.CityModel" />
+
+        <variable
+            name="callBack"
+            type="com.abuzar.locationsearch.ui.SearchAdapter" />
     </data>
-     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->callBack.onItemClick(cityData)}"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{cityData.cityName}"
-            />
+            android:text="@{cityData.cityName}" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{cityData.country}"
-            />
+            android:text="@{cityData.country}" />
 
 
     </LinearLayout>
