@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.abuzar.locationsearch.R
 import com.abuzar.locationsearch.data.CityModel
+import com.abuzar.locationsearch.databinding.CityItemBinding
 
 class SearchAdapter : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(DifferentUtil) {
 
@@ -17,7 +17,12 @@ class SearchAdapter : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(Diffe
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
-       return  CityViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.city_item,parent,false))
+
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = CityItemBinding.inflate(layoutInflater)
+
+
+       return  CityViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
@@ -34,17 +39,12 @@ class SearchAdapter : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(Diffe
     }
 
 
-    class CityViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class CityViewHolder(val binding: CityItemBinding) : RecyclerView.ViewHolder(binding.root){
 
-        private val tvTitle: TextView = view.findViewById(R.id.title)
-        private val tvSubTitle: TextView = view.findViewById(R.id.subTitle)
-
-        fun bind(cityModel: CityModel) {
-
-            tvTitle.text = cityModel.cityName
-            tvSubTitle.text = cityModel.country
+        fun bind(city : CityModel){
+            binding.cityData=city
+            binding.executePendingBindings()
         }
-
     }
 
 }

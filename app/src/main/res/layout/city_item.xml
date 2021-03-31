@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        
+        <variable
+            name="cityData"
+            type="com.abuzar.locationsearch.data.CityModel" />
     </data>
      <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -11,12 +13,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/title" />
+            android:text="@{cityData.cityName}"
+            />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/subTitle" />
+            android:text="@{cityData.country}"
+            />
 
 
     </LinearLayout>

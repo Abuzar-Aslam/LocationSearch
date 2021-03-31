@@ -1,28 +1,32 @@
 package com.abuzar.locationsearch.ui.search
+
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.abuzar.locationsearch.R
 import com.abuzar.locationsearch.base.BaseFragment
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.databinding.SearchCityFragmentBinding
 import com.abuzar.locationsearch.ui.SearchAdapter
+import kotlinx.android.synthetic.main.search_city_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(), SearchView.OnQueryTextListener {
+
+class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
+    SearchView.OnQueryTextListener {
 
 
     private val searchViewModel: SearchCityViewModel by viewModel()
     lateinit var queryString: String
-    lateinit var adapter: SearchAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,16 +37,34 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(), SearchView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        adapter = SearchAdapter()
-        val itemDecoration = DividerItemDecoration(getBinding().getRoot().getContext(), DividerItemDecoration.VERTICAL)
-        getBinding().list.addItemDecoration(itemDecoration)
-        getBinding().list.layoutManager = LinearLayoutManager(activity)
-        getBinding().list.adapter = adapter
 
+        recyclerViewList.apply {
+
+            layoutManager = LinearLayoutManager(context)
+            val decoration = DividerItemDecoration(
+                context,
+                StaggeredGridLayoutManager.VERTICAL
+            )
+            addItemDecoration(decoration)
+            adapter = searchViewModel.getAdapter()
+        }
+
+        registerLiveDataForCityList()
     }
 
+    private fun registerLiveDataForCityList() {
+        searchViewModel.getCityMutableLiveData()
+            .observe(viewLifecycleOwner, Observer<ArrayList<CityModel>> {
+                progressBar.visibility = View.GONE
+                if (it != null) {
+                    searchViewModel.setAdapterData(it)
+                }
+            })
+    }
+
+
     override fun getLayoutId(): Int {
-        return  R.layout.search_city_fragment
+        return R.layout.search_city_fragment
     }
 
     override fun getViewModel(): ViewModel {
@@ -62,8 +84,6 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(), SearchView
         searchView.imeOptions = EditorInfo.IME_ACTION_SEARCH
         searchView.isFocusable = true
         super.onCreateOptionsMenu(menu, menuInflater)
-
-        super.onCreateOptionsMenu(menu, menuInflater)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -74,10 +94,9 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(), SearchView
         if (newText.isNullOrEmpty()) {
             return false
         } else {
+            progressBar.visibility= View.VISIBLE
             queryString = newText
             searchViewModel.searchCities(newText)
-                .observe(this,
-                    Observer<List<CityModel>> { cities -> adapter.setCitiesList(cities as ArrayList<CityModel>) })
             return true
         }
     }
