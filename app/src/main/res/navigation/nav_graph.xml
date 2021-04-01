@@ -13,7 +13,10 @@
 
         <action
             android:id="@+id/action_cityList_to_mapFragment"
-            app:destination="@+id/mapFragment"/>
+            app:destination="@+id/mapFragment"
+            />
+
+
 
     </fragment>
 
@@ -21,6 +24,9 @@
         android:id="@+id/mapFragment"
         android:name="com.abuzar.locationsearch.ui.map.MapFragment"
         tools:layout="@layout/search_city_fragment">
+        <argument
+            android:name="CityModel"
+            app:argType="com.abuzar.locationsearch.data.CityModel" />
     </fragment>
 
 

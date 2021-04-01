@@ -5,21 +5,19 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.abuzar.locationsearch.R
 import com.abuzar.locationsearch.base.BaseFragment
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.databinding.SearchCityFragmentBinding
-import kotlinx.android.synthetic.main.search_city_fragment.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import androidx.navigation.fragment.findNavController
-import com.abuzar.locationsearch.utils.PROPERTY_CITY_MODEL
-import org.koin.android.ext.android.setProperty
 
 
 class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
@@ -32,8 +30,9 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        activity?.title = getString(R.string.searchScreenTitle)
         searchViewModel.setNavigator(this)
-        recyclerViewList.apply {
+        getBinding().recyclerViewList.apply {
 
             layoutManager = LinearLayoutManager(context)
             val decoration = DividerItemDecoration(
@@ -47,10 +46,18 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         registerLiveDataForCityList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val activity = activity as AppCompatActivity?
+        if (activity != null) {
+            activity.supportActionBar!!.show()
+        }
+    }
+
     private fun registerLiveDataForCityList() {
         searchViewModel.getCityMutableLiveData()
             .observe(viewLifecycleOwner, Observer<ArrayList<CityModel>> {
-                progressBar.visibility = View.GONE
+                getBinding().progressBar.visibility = View.GONE
                 if (it != null) {
                     searchViewModel.setAdapterData(it)
                 }
@@ -89,7 +96,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         if (newText.isNullOrEmpty()) {
             return false
         } else {
-            progressBar.visibility= View.VISIBLE
+            getBinding().progressBar.visibility = View.VISIBLE
             queryString = newText
             searchViewModel.searchCities(newText)
             return true
@@ -97,8 +104,9 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
     }
 
     override fun launchMapFragment(cityModel: CityModel) {
-        setProperty(PROPERTY_CITY_MODEL,cityModel)
-        findNavController().navigate(R.id.action_cityList_to_mapFragment)
+
+        val directions = SearchCityFragmentDirections.actionCityListToMapFragment(cityModel)
+        findNavController().navigate(directions)
     }
 
 }

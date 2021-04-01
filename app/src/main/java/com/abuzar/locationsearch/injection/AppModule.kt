@@ -20,7 +20,7 @@ import java.io.Reader
 val viewModelModule = module {
 
     single { SearchCityViewModel(get()) }
-    single { MapViewModel(getProperty(PROPERTY_CITY_MODEL)) }
+    single { MapViewModel() }
 
 }
 

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LocationSearch</string>
     <string name="search_message">Please click on the searchIcon on top to start searching the cities</string>
+    <string name="searchScreenTitle">Search Title</string>
 </resources>
