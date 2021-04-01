@@ -19,7 +19,9 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
-        binding.setVariable(1, getViewModel())
+        getViewModel()?.let {
+            binding.setVariable(1, getViewModel())
+        }
         binding.executePendingBindings()
         return binding.root
     }
@@ -32,7 +34,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     protected abstract fun getLayoutId(): Int
 
 
-    protected abstract fun getViewModel(): ViewModel
+    protected abstract fun getViewModel(): ViewModel?
 
     /**
      * finish parent activity

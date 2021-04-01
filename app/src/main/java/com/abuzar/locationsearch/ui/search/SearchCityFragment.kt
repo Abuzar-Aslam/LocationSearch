@@ -69,7 +69,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         return R.layout.search_city_fragment
     }
 
-    override fun getViewModel(): ViewModel {
+    override fun getViewModel(): ViewModel? {
         return searchViewModel
     }
 

@@ -20,7 +20,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     private lateinit var googleMap: GoogleMap
-    private val mapViewModel: MapViewModel by viewModel()
     val args: MapFragmentArgs by navArgs()
     private lateinit var cityModel : CityModel
 
@@ -62,8 +61,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
        return R.layout.fragment_map
     }
 
-    override fun getViewModel(): ViewModel {
-        return mapViewModel
+    override fun getViewModel(): ViewModel? {
+        return null
     }
 
 }
