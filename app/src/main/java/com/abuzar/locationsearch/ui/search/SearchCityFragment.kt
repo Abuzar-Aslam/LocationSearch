@@ -1,13 +1,16 @@
 package com.abuzar.locationsearch.ui.search
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
@@ -21,11 +24,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
-    SearchView.OnQueryTextListener,SearchCityNavigation {
+    SearchView.OnQueryTextListener, SearchCityNavigation {
 
 
     private val searchViewModel: SearchCityViewModel by viewModel()
-    lateinit var queryString: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +45,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
             adapter = searchViewModel.getAdapter()
         }
 
+        Log.e("Abuzar", "ONVIEW CREATED")
         registerLiveDataForCityList()
     }
 
@@ -52,6 +55,8 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         if (activity != null) {
             activity.supportActionBar!!.show()
         }
+
+        Log.e("Abuzar", "Come to ONRESUME")
     }
 
     private fun registerLiveDataForCityList() {
@@ -77,16 +82,22 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.menu_main, menu)
         val mSearchMenuItem = menu.findItem(R.id.action_search)
-
-        mSearchMenuItem.isEnabled = true
-
         val searchView = mSearchMenuItem.actionView as androidx.appcompat.widget.SearchView
         searchView.isIconified = true
         searchView.setOnQueryTextListener(this)
         searchView.imeOptions = EditorInfo.IME_ACTION_SEARCH
         searchView.isFocusable = true
+        searchViewModel.getQueryString()?.let {
+
+            mSearchMenuItem.expandActionView()
+            searchView.onActionViewExpanded()
+            searchView.setQuery(it,true)
+        }
         super.onCreateOptionsMenu(menu, menuInflater)
     }
+
+//    mSearchMenuItem.expandActionView()
+//    searchView.onActionViewExpanded()
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
@@ -97,8 +108,8 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
             return false
         } else {
             getBinding().progressBar.visibility = View.VISIBLE
-            queryString = newText
-            searchViewModel.searchCities(newText)
+            searchViewModel.setQueryString(newText)
+            searchViewModel.searchCities()
             return true
         }
     }

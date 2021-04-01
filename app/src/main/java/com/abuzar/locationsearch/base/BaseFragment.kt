@@ -20,7 +20,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
         getViewModel()?.let {
-            binding.setVariable(1, getViewModel())
+            binding.setVariable(1, it)
         }
         binding.executePendingBindings()
         return binding.root
