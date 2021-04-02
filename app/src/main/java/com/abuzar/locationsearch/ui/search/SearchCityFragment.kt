@@ -91,13 +91,10 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
 
             mSearchMenuItem.expandActionView()
             searchView.onActionViewExpanded()
-            searchView.setQuery(it,true)
+            searchView.setQuery(it, true)
         }
         super.onCreateOptionsMenu(menu, menuInflater)
     }
-
-//    mSearchMenuItem.expandActionView()
-//    searchView.onActionViewExpanded()
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
@@ -118,6 +115,11 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
 
         val directions = SearchCityFragmentDirections.actionCityListToMapFragment(cityModel)
         findNavController().navigate(directions)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        searchViewModel.onDestroy()
     }
 
 }
