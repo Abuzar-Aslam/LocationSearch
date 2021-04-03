@@ -10,10 +10,10 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class BaseUseCase<T>{
 
-
-    val disposables = CompositeDisposable()
+    private val disposables = CompositeDisposable()
     private val subscribeOn =Schedulers.io()
     private val observeOn =AndroidSchedulers.mainThread()
+
 
     open fun <O> execute(disposableObserver: O) where O : Disposable, O : Observer<T> {
         disposables.add(

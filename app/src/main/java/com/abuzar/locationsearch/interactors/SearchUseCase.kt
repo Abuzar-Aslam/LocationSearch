@@ -10,6 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
 
+
+
     lateinit var citiesList: ArrayList<CityModel>
     var queryString: String?=null
     fun <O> execute(
@@ -33,7 +35,6 @@ class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
             .flatMapSingle { group ->
                 group.toList()
                     .map { sublist ->
-                        Log.e("Abuzar", "FIRST MAP")
                         val dataModels: ArrayList<CityModel> = ArrayList()
                         for (data in sublist) {
                             queryString?.let {
