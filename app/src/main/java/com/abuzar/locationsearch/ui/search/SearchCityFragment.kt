@@ -57,7 +57,6 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
     private fun registerLiveDataForCityList() {
         searchViewModel.getCityMutableLiveData()
             .observe(viewLifecycleOwner, Observer<List<CityModel>> {
-                getBinding().progressBar.visibility = View.GONE
                 if (it.isNullOrEmpty()) {
                     searchViewModel.setAdapterData(emptyList())
                     searchViewModel.setMessageTextLiveData(getString(R.string.norecord_search_message))
@@ -116,7 +115,6 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
             return false
         } else {
             searchViewModel.setMessageTextVisibilityLiveData(false)
-            getBinding().progressBar.visibility = View.VISIBLE
             searchViewModel.searchCities(newText)
             return true
         }

@@ -21,7 +21,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
 
     private lateinit var googleMap: GoogleMap
     val args: MapFragmentArgs by navArgs()
-    private lateinit var cityModel : CityModel
+    private lateinit var cityModel: CityModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +29,9 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         cityModel = args.CityModel
         getBinding().toolbarId.setNavigationOnClickListener { activity?.onBackPressed() }
         getBinding().toolbarId.title = cityModel.formattedTitle()
+        getBinding().cityTitle.text = cityModel.formattedTitle()
+        getBinding().citySubTitle.text =
+            cityModel.coordinates.latitude.toString() + " , " + cityModel.coordinates.longitude
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.supportActionBar!!.hide()
@@ -58,7 +61,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
     }
 
     override fun getLayoutId(): Int {
-       return R.layout.fragment_map
+        return R.layout.fragment_map
     }
 
     override fun getViewModel(): ViewModel? {
