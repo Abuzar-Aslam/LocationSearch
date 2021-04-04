@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.databinding.CityItemBinding
-import com.abuzar.locationsearch.utils.PROPERTY_CITY_MODEL
 
-class SearchAdapter(val searchCityNavigation: SearchCityNavigation) :
+class SearchAdapter(private val searchCityNavigation: SearchCityNavigation) :
     ListAdapter<CityModel, SearchAdapter.CityViewHolder>(
         DifferentUtil
     ) {
@@ -32,7 +31,7 @@ class SearchAdapter(val searchCityNavigation: SearchCityNavigation) :
     }
 
     override fun getItemCount(): Int {
-        return cityModelList?.size ?: 0
+        return cityModelList.size
     }
 
     fun setCitiesList(cityModelList: List<CityModel>) {

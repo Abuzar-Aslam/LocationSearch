@@ -1,8 +1,6 @@
 package com.abuzar.locationsearch.interactors
 
-import android.util.Log
 import com.abuzar.locationsearch.data.CityModel
-import com.google.android.gms.tasks.Tasks.call
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
