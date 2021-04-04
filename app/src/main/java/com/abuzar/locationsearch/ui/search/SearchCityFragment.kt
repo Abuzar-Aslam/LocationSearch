@@ -41,9 +41,9 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
             addItemDecoration(decoration)
             adapter = searchViewModel.getAdapter()
         }
-
-        Log.e("Abuzar", "ONVIEW CREATED")
         registerLiveDataForCityList()
+        searchViewModel.setMessageTextLiveData(getString(R.string.start_search_message))
+
     }
 
     override fun onResume() {
@@ -52,18 +52,29 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         if (activity != null) {
             activity.supportActionBar!!.show()
         }
-
-        Log.e("Abuzar", "Come to ONRESUME")
     }
 
     private fun registerLiveDataForCityList() {
         searchViewModel.getCityMutableLiveData()
             .observe(viewLifecycleOwner, Observer<List<CityModel>> {
                 getBinding().progressBar.visibility = View.GONE
-                if (it != null) {
+                if (it.isNullOrEmpty()) {
+                    searchViewModel.setAdapterData(emptyList())
+                    searchViewModel.setMessageTextLiveData(getString(R.string.norecord_search_message))
+                    searchViewModel.setMessageTextVisibilityLiveData(true)
+                } else {
                     searchViewModel.setAdapterData(it)
                 }
             })
+
+        searchViewModel.getMessageTextVisibilityLiveData().observe(viewLifecycleOwner, Observer {
+            getBinding().message.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
+        searchViewModel.getMessageTextLiveData().observe(viewLifecycleOwner, Observer {
+            getBinding().message.text = it
+        })
+
     }
 
 
@@ -99,8 +110,12 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
 
     override fun onQueryTextChange(newText: String?): Boolean {
         if (newText.isNullOrEmpty()) {
+            searchViewModel.setMessageTextVisibilityLiveData(true)
+            searchViewModel.setMessageTextLiveData(getString(R.string.start_search_message))
+            searchViewModel.setAdapterData(emptyList())
             return false
         } else {
+            searchViewModel.setMessageTextVisibilityLiveData(false)
             getBinding().progressBar.visibility = View.VISIBLE
             searchViewModel.searchCities(newText)
             return true

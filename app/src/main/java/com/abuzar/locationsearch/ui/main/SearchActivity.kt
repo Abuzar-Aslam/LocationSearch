@@ -1,4 +1,4 @@
-package com.abuzar.locationsearch.ui
+package com.abuzar.locationsearch.ui.main
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,28 +11,15 @@ import com.abuzar.locationsearch.databinding.ActivitySearchBinding
 
 class SearchActivity : AppCompatActivity() {
 
-    lateinit var mSearchMenuItem: MenuItem
-    lateinit var queryString: String
-    private var artistList: List<CityModel>? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivitySearchBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_search)
+        DataBindingUtil.setContentView(this, R.layout.activity_search) as ActivitySearchBinding
 
 
     }
 
     override fun onSupportNavigateUp() =
         Navigation.findNavController(this, R.id.navHostFragment).navigateUp()
-
-    private fun getAllCities() {
-//        searchViewModel.getAllCities()
-//            .observe(this,
-//                Observer<List<CityModel>> { cities -> adapter.setCitiesList(cities as ArrayList<CityModel>) })
-    }
-
 
 
 }

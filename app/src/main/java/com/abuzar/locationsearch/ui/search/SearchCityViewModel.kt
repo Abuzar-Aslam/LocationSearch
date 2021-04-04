@@ -1,5 +1,6 @@
 package com.abuzar.locationsearch.ui.search
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.abuzar.locationsearch.data.CityModel
@@ -13,6 +14,8 @@ class SearchCityViewModel(private val cityList: ArrayList<CityModel>, private va
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchCityNavigation: SearchCityNavigation
     private var queryString: String? = null
+    private val messageTextLiveData : MutableLiveData<String> = MutableLiveData()
+    private val messageTextVisibilityLiveData : MutableLiveData<Boolean> = MutableLiveData(true)
 
     fun getAdapter(): SearchAdapter {
         searchAdapter = SearchAdapter(searchCityNavigation)
@@ -55,4 +58,22 @@ class SearchCityViewModel(private val cityList: ArrayList<CityModel>, private va
         cityLiveData.postValue(citiesSearchResult)
     }
 
+    fun getMessageTextLiveData(): LiveData<String> {
+        return messageTextLiveData
+    }
+
+    fun setMessageTextLiveData(messageText : String){
+        messageTextLiveData.postValue(messageText)
+    }
+
+
+    fun getMessageTextVisibilityLiveData(): LiveData<Boolean> {
+        return messageTextVisibilityLiveData
+    }
+
+    fun setMessageTextVisibilityLiveData(visibility : Boolean){
+        messageTextVisibilityLiveData.postValue(visibility)
+    }
+
 }
+
