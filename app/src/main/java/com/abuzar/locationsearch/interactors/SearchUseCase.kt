@@ -14,6 +14,9 @@ class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
 
     lateinit var citiesList: ArrayList<CityModel>
     var queryString: String?=null
+    val groupIndex = AtomicInteger()
+    val threadCount = Runtime.getRuntime().availableProcessors()
+
     fun <O> execute(
         citiesList: ArrayList<CityModel>,
         queryString: String?,
@@ -27,10 +30,7 @@ class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
 
     override fun buildUseCaseObservable(): Observable<ArrayList<CityModel>> {
 
-        val groupIndex = AtomicInteger()
-
-        val threadCount = Runtime.getRuntime().availableProcessors()
-        return Observable.fromIterable(citiesList)
+       return Observable.fromIterable(citiesList)
             .groupBy { _ -> groupIndex.getAndIncrement() % threadCount }
             .flatMapSingle { group ->
                 group.toList()
