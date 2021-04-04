@@ -3,19 +3,18 @@ package com.abuzar.locationsearch.interactors
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Observer
+import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 abstract class BaseUseCase<T>{
-
+    private val subscribeOn: Scheduler = Schedulers.io()
+    private val observeOn: Scheduler = AndroidSchedulers.mainThread()
     private val disposables = CompositeDisposable()
-    private val subscribeOn =Schedulers.io()
-    private val observeOn =AndroidSchedulers.mainThread()
 
-
-    open fun <O> execute(disposableObserver: O) where O : Disposable, O : Observer<T> {
+    fun <O> execute(disposableObserver: O) where O : Disposable, O : Observer<T> {
         disposables.add(
             buildUseCaseObservable()
                 .compose(applySchedulers())
@@ -23,13 +22,12 @@ abstract class BaseUseCase<T>{
         )
     }
 
-    open fun unsubscribe() {
+    fun unsubscribe() {
         disposables.clear()
     }
 
     protected abstract fun buildUseCaseObservable(): Observable<T>
-
-    open fun buildCacheObservable(): Observable<T>? {
+    fun buildCacheObservable(): Observable<T> {
         return Observable.empty()
     }
 

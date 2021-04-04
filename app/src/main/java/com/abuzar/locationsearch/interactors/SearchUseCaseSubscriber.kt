@@ -1,12 +1,11 @@
 package com.abuzar.locationsearch.interactors
 
-import androidx.lifecycle.MutableLiveData
 import com.abuzar.locationsearch.data.CityModel
-import kotlin.Comparator
+import com.abuzar.locationsearch.ui.search.SearchCityViewModel
 import kotlin.collections.ArrayList
 
 
-class SearchUseCaseSubscriber(private val searchCityViewModel: MutableLiveData<ArrayList<CityModel>>) :
+class SearchUseCaseSubscriber(private val searchCityViewModel: SearchCityViewModel) :
     BaseUseCaseSubscriber<ArrayList<CityModel>>() {
 
 
@@ -19,14 +18,15 @@ class SearchUseCaseSubscriber(private val searchCityViewModel: MutableLiveData<A
     }
 
     override fun onComplete() {
+        searchCityViewModel.setCitiesListResult(getSortedList(filteredCityList))
+    }
 
-        filteredCityList.sortWith(Comparator { s1, s2 ->
-            s1.cityName.compareTo(
-                s2.cityName,
-                ignoreCase = true
-            )
-        })
-        searchCityViewModel.postValue(filteredCityList)
+    fun getSortedList(citiesList: ArrayList<CityModel>): List<CityModel> {
+
+        return citiesList.sortedWith(
+            compareBy(String.CASE_INSENSITIVE_ORDER,
+                { it.cityName })
+        )
     }
 
 

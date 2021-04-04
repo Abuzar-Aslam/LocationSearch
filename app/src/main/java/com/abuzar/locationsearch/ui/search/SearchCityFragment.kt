@@ -1,12 +1,9 @@
 package com.abuzar.locationsearch.ui.search
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -61,7 +58,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
 
     private fun registerLiveDataForCityList() {
         searchViewModel.getCityMutableLiveData()
-            .observe(viewLifecycleOwner, Observer<ArrayList<CityModel>> {
+            .observe(viewLifecycleOwner, Observer<List<CityModel>> {
                 getBinding().progressBar.visibility = View.GONE
                 if (it != null) {
                     searchViewModel.setAdapterData(it)
@@ -105,8 +102,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
             return false
         } else {
             getBinding().progressBar.visibility = View.VISIBLE
-            searchViewModel.setQueryString(newText)
-            searchViewModel.searchCities()
+            searchViewModel.searchCities(newText)
             return true
         }
     }

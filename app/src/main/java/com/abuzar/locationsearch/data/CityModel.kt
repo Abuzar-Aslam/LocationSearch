@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CityModel(
+    @SerializedName("_id") val id: Int,
     @SerializedName("country") val country: String,
     @SerializedName("name") val cityName: String,
     @SerializedName("coord") val coordinates: Coordinates

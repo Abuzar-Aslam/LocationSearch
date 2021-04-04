@@ -3,6 +3,7 @@ package com.abuzar.locationsearch.injection
 import android.content.res.AssetManager
 import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.data.Coordinates
+import com.abuzar.locationsearch.interactors.SearchUseCase
 import com.abuzar.locationsearch.ui.search.SearchCityViewModel
 import com.abuzar.locationsearch.utils.CITIES_ASSETS
 import com.abuzar.locationsearch.utils.CITIES_ASSETS_JSON
@@ -17,12 +18,17 @@ import java.io.Reader
 
 val viewModelModule = module {
 
-    single { SearchCityViewModel(get()) }
+    single { SearchCityViewModel(get(),get()) }
 
 }
 
 
 val dataModule = module {
+
+
+    single {
+        SearchUseCase()
+    }
 
     single {
         val flashLightObj: ArrayList<CityModel> = try {
@@ -32,7 +38,7 @@ val dataModule = module {
         } catch (e: IOException) {
             e.printStackTrace()
             val arrayList = ArrayList<CityModel>()
-            arrayList.add(CityModel("", "", Coordinates(0.0, 0.0)))
+            arrayList.add(CityModel(0,"", "", Coordinates(0.0, 0.0)))
             arrayList
         }
         flashLightObj

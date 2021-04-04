@@ -7,13 +7,12 @@ import com.abuzar.locationsearch.interactors.SearchUseCase
 import com.abuzar.locationsearch.interactors.SearchUseCaseSubscriber
 import kotlin.collections.ArrayList
 
-class SearchCityViewModel(private val cityList: ArrayList<CityModel>) : ViewModel() {
+class SearchCityViewModel(private val cityList: ArrayList<CityModel>, private val searchUseCase: SearchUseCase) : ViewModel() {
 
-    private var cityLiveData: MutableLiveData<ArrayList<CityModel>> = MutableLiveData()
+    private var cityLiveData: MutableLiveData<List<CityModel>> = MutableLiveData()
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchCityNavigation: SearchCityNavigation
     private var queryString: String? = null
-    private val searchUseCase = SearchUseCase()
 
     fun getAdapter(): SearchAdapter {
         searchAdapter = SearchAdapter(searchCityNavigation)
@@ -25,16 +24,16 @@ class SearchCityViewModel(private val cityList: ArrayList<CityModel>) : ViewMode
     }
 
 
-    fun getCityMutableLiveData(): MutableLiveData<ArrayList<CityModel>> {
+    fun getCityMutableLiveData(): MutableLiveData<List<CityModel>> {
         return cityLiveData
     }
 
-    fun searchCities() {
-        searchUseCase.unsubscribe()
-        searchUseCase.execute(cityList, queryString, SearchUseCaseSubscriber(cityLiveData))
+    fun searchCities(newText: String) {
+        setQueryString(newText)
+        searchUseCase.execute(cityList, newText, SearchUseCaseSubscriber(this))
     }
 
-    fun setAdapterData(items: ArrayList<CityModel>) {
+    fun setAdapterData(items: List<CityModel>) {
 
         searchAdapter.setCitiesList(items)
         searchAdapter.notifyDataSetChanged()
@@ -50,6 +49,10 @@ class SearchCityViewModel(private val cityList: ArrayList<CityModel>) : ViewMode
 
     fun onDestroy() {
         searchUseCase.unsubscribe()
+    }
+
+    fun setCitiesListResult(citiesSearchResult :List<CityModel>){
+        cityLiveData.postValue(citiesSearchResult)
     }
 
 }

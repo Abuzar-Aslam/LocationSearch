@@ -9,9 +9,10 @@ import com.abuzar.locationsearch.data.CityModel
 import com.abuzar.locationsearch.databinding.CityItemBinding
 import com.abuzar.locationsearch.utils.PROPERTY_CITY_MODEL
 
-class SearchAdapter(val searchCityNavigation: SearchCityNavigation) : ListAdapter<CityModel, SearchAdapter.CityViewHolder>(
-    DifferentUtil
-) {
+class SearchAdapter(val searchCityNavigation: SearchCityNavigation) :
+    ListAdapter<CityModel, SearchAdapter.CityViewHolder>(
+        DifferentUtil
+    ) {
 
 
     private var cityModelList = ArrayList<CityModel>()
@@ -20,10 +21,10 @@ class SearchAdapter(val searchCityNavigation: SearchCityNavigation) : ListAdapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
 
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = CityItemBinding.inflate(layoutInflater,parent,false)
+        val binding = CityItemBinding.inflate(layoutInflater, parent, false)
         binding.callBack = this
 
-       return  CityViewHolder(binding)
+        return CityViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CityViewHolder, position: Int) {
@@ -34,8 +35,9 @@ class SearchAdapter(val searchCityNavigation: SearchCityNavigation) : ListAdapte
         return cityModelList?.size ?: 0
     }
 
-    fun setCitiesList(cityModelList: ArrayList<CityModel>) {
-        this.cityModelList = cityModelList
+    fun setCitiesList(cityModelList: List<CityModel>) {
+        this.cityModelList.clear()
+        this.cityModelList.addAll(cityModelList)
         notifyDataSetChanged()
     }
 
@@ -44,10 +46,10 @@ class SearchAdapter(val searchCityNavigation: SearchCityNavigation) : ListAdapte
     }
 
 
-    class CityViewHolder(val binding: CityItemBinding) : RecyclerView.ViewHolder(binding.root){
+    class CityViewHolder(val binding: CityItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(city : CityModel){
-            binding.cityData=city
+        fun bind(city: CityModel) {
+            binding.cityData = city
             binding.executePendingBindings()
         }
     }

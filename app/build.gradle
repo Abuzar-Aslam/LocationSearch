@@ -10,6 +10,10 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     defaultConfig {
         applicationId "com.abuzar.locationsearch"
         minSdkVersion 21
@@ -63,6 +67,7 @@ dependencies {
             "junit:junit:${junit_version}",
             "org.assertj:assertj-core:3.11.1",
             "org.mockito:mockito-core:2.24.5",
+            "org.mockito:mockito-inline:2.13.0",
             "org.powermock:powermock-module-junit4:${power_mock_version}",
             "org.powermock:powermock-api-mockito2:${power_mock_version}"
     )
