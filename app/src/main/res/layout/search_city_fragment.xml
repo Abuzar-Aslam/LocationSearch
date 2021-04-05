@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.abuzar.locationsearch.ui.search.SearchCityViewModel" />
@@ -28,8 +29,8 @@
             android:background="@color/white"
             android:gravity="center"
             android:padding="@dimen/padding"
-            android:textSize="@dimen/titleTextSize"
             android:textAlignment="center"
+            android:textSize="@dimen/titleTextSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

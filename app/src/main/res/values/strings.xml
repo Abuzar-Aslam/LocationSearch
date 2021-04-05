@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">LocationSearch</string>
     <string name="start_search_message">Please head on to search to find the City you are looking for.</string>
-    <string name="norecord_search_message">No City found, Please try again!</string>
+    <string name="norecord_search_message">No City found. Please try again!</string>
 
     <string name="searchScreenTitle">Search Title</string>
 </resources>

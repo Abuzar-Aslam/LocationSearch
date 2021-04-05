@@ -26,7 +26,7 @@ abstract class BaseUseCase<T>{
         disposables.clear()
     }
 
-    public abstract fun buildUseCaseObservable(): Observable<T>
+    abstract fun buildUseCaseObservable(): Observable<T>
     fun buildCacheObservable(): Observable<T> {
         return Observable.empty()
     }

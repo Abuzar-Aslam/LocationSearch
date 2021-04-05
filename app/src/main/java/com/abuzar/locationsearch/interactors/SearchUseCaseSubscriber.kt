@@ -12,9 +12,7 @@ class SearchUseCaseSubscriber(private val searchCityViewModel: SearchCityViewMod
     private val filteredCityList = ArrayList<CityModel>()
 
     override fun onNext(cityModelArrayList: ArrayList<CityModel>) {
-
         filteredCityList.addAll(cityModelArrayList)
-
     }
 
     override fun onComplete() {

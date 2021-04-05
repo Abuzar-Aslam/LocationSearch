@@ -46,7 +46,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         map?.let {
             googleMap = it
 
-            // Add a marker in Sydney and move the camera
             val cityLocation = LatLng(
                 cityModel.coordinates.latitude,
                 cityModel.coordinates.longitude

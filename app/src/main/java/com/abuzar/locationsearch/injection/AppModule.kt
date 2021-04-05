@@ -31,7 +31,7 @@ val dataModule = module {
     }
 
     single {
-        val flashLightObj: ArrayList<CityModel> = try {
+        val citiesList: ArrayList<CityModel> = try {
             val reader: Reader = InputStreamReader(get(CITIES_ASSETS))
             val arrayListCitiesType = object : TypeToken<ArrayList<CityModel>>() {}.type
             Gson().fromJson(reader, arrayListCitiesType)
@@ -41,7 +41,7 @@ val dataModule = module {
             arrayList.add(CityModel(0,"", "", Coordinates(0.0, 0.0)))
             arrayList
         }
-        flashLightObj
+        citiesList
     }
 
 

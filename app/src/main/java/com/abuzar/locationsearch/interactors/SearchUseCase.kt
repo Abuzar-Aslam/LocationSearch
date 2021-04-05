@@ -9,9 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger
 class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
 
 
-
     lateinit var citiesList: ArrayList<CityModel>
-    var queryString: String?=null
+    var queryString: String? = null
     val groupIndex = AtomicInteger()
     val threadCount = Runtime.getRuntime().availableProcessors()
 
@@ -28,7 +27,7 @@ class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
 
     override fun buildUseCaseObservable(): Observable<ArrayList<CityModel>> {
 
-       return Observable.fromIterable(citiesList)
+        return Observable.fromIterable(citiesList)
             .groupBy { _ -> groupIndex.getAndIncrement() % threadCount }
             .flatMapSingle { group ->
                 group.toList()

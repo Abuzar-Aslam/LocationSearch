@@ -15,22 +15,22 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding"
         android:onClick="@{()->callBack.onItemClick(cityData)}"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/padding">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:text="@{cityData.formattedTitle()}"
             android:textSize="@dimen/titleTextSize"
-            android:text="@{cityData.formattedTitle()}" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/subTitleTextSize"
-            android:text="@{cityData.country}" />
+            android:text="@{cityData.country}"
+            android:textSize="@dimen/subTitleTextSize" />
 
 
     </LinearLayout>

@@ -46,10 +46,4 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         }
     }
 
-
-    open fun onBackButtonPressed() {
-        //Do Nothing
-        Log.d("Abuzar", "Base Fragment Back Button Pressed")
-    }
-
 }
