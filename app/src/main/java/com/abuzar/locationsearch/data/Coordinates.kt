@@ -6,4 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Coordinates(@SerializedName("lon") val longitude: Double,
-                       @SerializedName("lat") val latitude: Double):Parcelable
+                       @SerializedName("lat") val latitude: Double):Parcelable {
+
+
+    fun formattedLatLng(): String {
+        return "$latitude, $longitude"
+    }
+
+                       }

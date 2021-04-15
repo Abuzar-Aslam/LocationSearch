@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,7 +12,8 @@
             type="com.abuzar.locationsearch.ui.search.SearchAdapter" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{()->callBack.onItemClick(cityData)}"
@@ -20,18 +21,27 @@
         android:padding="@dimen/padding">
 
         <TextView
+            android:id="@+id/countryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{cityData.formattedTitle()}"
             android:textSize="@dimen/titleTextSize"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/latlng"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/latlng"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{cityData.country}"
-            android:textSize="@dimen/subTitleTextSize" />
+            android:text="@{cityData.coordinates.formattedLatLng()}"
+            android:textSize="@dimen/subTitleTextSize"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/countryTitle" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

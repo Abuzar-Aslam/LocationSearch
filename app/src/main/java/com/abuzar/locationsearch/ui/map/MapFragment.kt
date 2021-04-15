@@ -30,8 +30,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(), OnMapReadyCallback {
         getBinding().toolbarId.setNavigationOnClickListener { activity?.onBackPressed() }
         getBinding().toolbarId.title = cityModel.formattedTitle()
         getBinding().cityTitle.text = cityModel.formattedTitle()
-        getBinding().citySubTitle.text =
-            cityModel.coordinates.latitude.toString() + " , " + cityModel.coordinates.longitude
+        getBinding().citySubTitle.text = cityModel.coordinates.formattedLatLng()
         val activity = activity as AppCompatActivity?
         if (activity != null) {
             activity.supportActionBar!!.hide()

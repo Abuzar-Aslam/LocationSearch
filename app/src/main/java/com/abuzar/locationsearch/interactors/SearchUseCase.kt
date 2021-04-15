@@ -11,8 +11,8 @@ class SearchUseCase() : BaseUseCase<ArrayList<CityModel>>() {
 
     lateinit var citiesList: ArrayList<CityModel>
     var queryString: String? = null
-    val groupIndex = AtomicInteger()
-    val threadCount = Runtime.getRuntime().availableProcessors()
+    private val groupIndex = AtomicInteger()
+    private val threadCount = Runtime.getRuntime().availableProcessors()
 
     fun <O> execute(
         citiesList: ArrayList<CityModel>,

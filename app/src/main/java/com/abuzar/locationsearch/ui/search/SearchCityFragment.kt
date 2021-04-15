@@ -61,6 +61,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
                     searchViewModel.setMessageTextLiveData(getString(R.string.norecord_search_message))
                     searchViewModel.setMessageTextVisibilityLiveData(true)
                 } else {
+                    searchViewModel.setMessageTextVisibilityLiveData(false)
                     searchViewModel.setAdapterData(it)
                 }
             })
@@ -80,7 +81,7 @@ class SearchCityFragment : BaseFragment<SearchCityFragmentBinding>(),
         return R.layout.search_city_fragment
     }
 
-    override fun getViewModel(): ViewModel? {
+    override fun getViewModel(): ViewModel {
         return searchViewModel
     }
 
